@@ -3,11 +3,16 @@
   "app": "npx ts-node main.ts",
   "projectId": "56804856-0cec-49b7-a518-cdc381b23b34",
   "terraformProviders": [
-    "terraform-providers/docker@~> 2.0"
+    "terraform-providers/docker@~> 2.0",
+    "cyrilgdn/postgresql@~> 1.14.0",
+    "hashicorp/time@~> 0.7.2"
   ],
-  "terraformModules": [],
+  "terraformModules": [
+
+  ],
   "context": {
     "excludeStackIdFromLogicalIds": "true",
     "allowSepCharsInLogicalIds": "true"
   }
 }
+

@@ -9,14 +9,18 @@ class MyStack extends TerraformStack {
   constructor(scope: Construct, name: string) {
     super(scope, name);
 
+    // Providers
     new DockerProvider(this, 'docker_provider', {})
     new TimeProvider(this, 'time_provider', {})
 
+    // Variables
     let customers: { name: string, dbPassword: string }[] = [
       {"name": "dev-1", "dbPassword": "0FJzC6e9dBJbhsb2FVQTeMA732BN3SzM"},
       {"name": "dev-2", "dbPassword": "UUnU7Y1y9xetHiz7mMBmzsZ6KdD3HWjc"},
     ];
+    const CONDITION = true
 
+    // Resources
     const dockerImage = new Image(this, 'postgresImage', {
       name: 'postgres:latest',
       keepLocally: false,
@@ -40,8 +44,19 @@ class MyStack extends TerraformStack {
       )
     }
 
+    if (CONDITION) {
+      new Container(this, 'postgres-conditional', {
+        image: dockerImage.latest,
+        name: 'postgres-conditional',
+        env: [
+          "POSTGRES_PASSWORD=test"
+        ],
+      })
+    }
+
+
     let sleep = new Sleep(this, 'wait_containers', {
-      createDuration: "9s",
+      createDuration: "8s",
       dependsOn: containers
     });
 
